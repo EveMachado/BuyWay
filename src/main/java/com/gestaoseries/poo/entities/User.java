@@ -18,33 +18,31 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tb_user")
 //Permite  que os objetos da classe 'user" possam ser convertidos em bytes para serem transferidos
-public class User implements Serializable{
+public class User implements Serializable {
 
-    //identificador de versão unico para a classe
-    @Serial
-    private static final long serialVersionUID = 1L;
-	
+	// identificador de versão unico para a classe
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//Atributos
+	// Atributos
 	private Long id;
 	private String name;
 	private String email;
 	private String phone;
 	private String password;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
-	
-	
 
-	//construtor padrão sem parametros
+	// construtor padrão sem parametros
 	public User() {
-		
+
 	}
 
-	//construtor com parametros
+	// construtor com parametros
 	public User(Long id, String name, String email, String phone, String password) {
 		super();
 		this.id = id;
@@ -54,7 +52,8 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	//Getters e setters: get retorna o valor do tributo e o set modifica ou atualiza o valor
+	// Getters e setters: get retorna o valor do tributo e o set modifica ou
+	// atualiza o valor
 	public Long getId() {
 		return id;
 	}
@@ -94,18 +93,19 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public List<Order> getOrders() {
 		return orders;
 	}
 
-	//substitui o metodo hashcode pra que ele retone um valor hash
+	// substitui o metodo hashcode pra que ele retone um valor hash
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
 
-	//substitui o método 'equals' para comparar dois objetos 'user'. Dois objetos sao iguais se o id for igual
+	// substitui o método 'equals' para comparar dois objetos 'user'. Dois objetos
+	// sao iguais se o id for igual
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -117,8 +117,5 @@ public class User implements Serializable{
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	
-	
 
 }
