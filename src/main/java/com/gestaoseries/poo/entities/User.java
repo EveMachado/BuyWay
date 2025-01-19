@@ -1,18 +1,20 @@
 package com.gestaoseries.poo.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
 @Entity
 @Table(name = "tb_user")
-
 //Permite  que os objetos da classe 'user" possam ser convertidos em bytes para serem transferidos
 public class User implements Serializable{
 
@@ -23,10 +25,15 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//Atributos
 	private Long id;
-	private String nome;
+	private String name;
 	private String email;
-	private String telefone;
-	private String senha;
+	private String phone;
+	private String password;
+	
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
+	
+	
 
 	//construtor padrão sem parametros
 	public User() {
@@ -34,13 +41,13 @@ public class User implements Serializable{
 	}
 
 	//construtor com parametros
-	public User(Long id, String nome, String email, String telefone, String senha) {
+	public User(Long id, String name, String email, String phone, String password) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 		this.email = email;
-		this.telefone = telefone;
-		this.senha = senha;
+		this.phone = phone;
+		this.password = password;
 	}
 
 	//Getters e setters: get retorna o valor do tributo e o set modifica ou atualiza o valor
@@ -52,12 +59,12 @@ public class User implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -68,20 +75,24 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public List<Order> getOrders() {
+		return orders;
 	}
 
 	//substitui o metodo hashcode pra que ele retone um valor hash
@@ -102,9 +113,7 @@ public class User implements Serializable{
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
+
 	
 	
 
