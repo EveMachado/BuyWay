@@ -10,8 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 
 @Entity
@@ -29,9 +31,12 @@ public class Product implements Serializable {
 	private String imgUrl;
 	
 	
-	//Para garantir que a coleção não comece valendo null
+	//Coleção de categorias
 	//Set é uma interface, ele não pode ser instanciado, por isso utilizamos o HashSet
-	@Transient
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", 
+	joinColumns = @JoinColumn(name = "product_id"),
+	inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> catetories = new HashSet<>();
 	
 	public Product () {
