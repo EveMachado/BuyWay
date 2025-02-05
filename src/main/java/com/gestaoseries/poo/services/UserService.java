@@ -12,6 +12,8 @@ import com.gestaoseries.poo.repositories.UserRepository;
 import com.gestaoseries.poo.services.exceptions.DatabaseException;
 import com.gestaoseries.poo.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 
 @Service
 public class UserService {
@@ -48,11 +50,14 @@ public class UserService {
 	}
 
 	public User update(Long id, User obj) {
+		try {
 		User entity = repository.getReferenceById(id);
 		uptadeData(entity, obj);
 		return repository.save(entity);
-		
+		}catch (EntityNotFoundException e)	{	
+			 throw new ResourceNotFoundException(id);
 		}
+	}
 
 	private void uptadeData(User entity, User obj) {
 		entity.setName(obj.getName());
